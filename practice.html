@@ -35,6 +35,30 @@
     }
   </script>
 </head>
+<script>
+  // Fade IN on load
+  window.addEventListener('load', () => {
+    const overlay = document.getElementById('page-transition')
+    overlay.classList.add('opacity-0')
+    setTimeout(() => overlay.remove(), 300)
+  })
+
+  // Fade OUT on navigation
+  document.querySelectorAll('a[href]').forEach(link => {
+    link.addEventListener('click', e => {
+      const href = link.getAttribute('href')
+      if (!href.startsWith('#') && !href.startsWith('http')) {
+        e.preventDefault()
+        const overlay = document.createElement('div')
+        overlay.className =
+          'fixed inset-0 bg-white dark:bg-slate-900 z-[9999] opacity-0 transition-opacity duration-300'
+        document.body.appendChild(overlay)
+        requestAnimationFrame(() => overlay.classList.remove('opacity-0'))
+        setTimeout(() => window.location.href = href, 300)
+      }
+    })
+  })
+</script>
 
 <body class="bg-white dark:bg-slate-900 text-gray-700 dark:text-gray-300 transition-colors">
 
@@ -78,17 +102,48 @@
 
 <!-- MAIN -->
 <main class="py-24 max-w-6xl mx-auto px-6">
-  <h2 class="text-4xl font-bold text-primary dark:text-white animate-fade">
-    Practice Areas
-  </h2>
 
-  <ul class="mt-10 space-y-6 list-disc list-inside">
-    <li>Corporate & Commercial Law</li>
-    <li>Family & Divorce Law</li>
-    <li>Criminal Defense</li>
-    <li>Real Estate Law</li>
-  </ul>
+<h2 class="text-4xl font-bold text-primary dark:text-white">
+  Practice Areas
+</h2>
+
+<p class="mt-6 max-w-3xl">
+  We provide comprehensive legal services across a wide range of practice
+  areas, representing clients in both advisory and litigation matters.
+</p>
+
+<div class="grid md:grid-cols-2 gap-10 mt-14">
+  <div class="p-8 border dark:border-slate-700 rounded-lg">
+    <h3 class="text-xl font-semibold">Corporate & Commercial Law</h3>
+    <p class="mt-3">
+      Business formation, contracts, compliance, mergers, and dispute resolution.
+    </p>
+  </div>
+
+  <div class="p-8 border dark:border-slate-700 rounded-lg">
+    <h3 class="text-xl font-semibold">Family Law</h3>
+    <p class="mt-3">
+      Divorce, custody, child support, prenuptial agreements, and mediation.
+    </p>
+  </div>
+
+  <div class="p-8 border dark:border-slate-700 rounded-lg">
+    <h3 class="text-xl font-semibold">Criminal Defense</h3>
+    <p class="mt-3">
+      Strategic defense for misdemeanors, felonies, and white-collar crimes.
+    </p>
+  </div>
+
+  <div class="p-8 border dark:border-slate-700 rounded-lg">
+    <h3 class="text-xl font-semibold">Real Estate Law</h3>
+    <p class="mt-3">
+      Transactions, leasing, property disputes, and development matters.
+    </p>
+  </div>
+</div>
+
 </main>
+
 
 
 <!-- FOOTER -->
@@ -118,4 +173,8 @@
 </script>
 
 </body>
+<div id="page-transition"
+     class="fixed inset-0 bg-white dark:bg-slate-900 z-[9999] opacity-100 transition-opacity duration-300">
+</div>
+
 </html>

@@ -35,6 +35,30 @@
     }
   </script>
 </head>
+<script>
+  // Fade IN on load
+  window.addEventListener('load', () => {
+    const overlay = document.getElementById('page-transition')
+    overlay.classList.add('opacity-0')
+    setTimeout(() => overlay.remove(), 300)
+  })
+
+  // Fade OUT on navigation
+  document.querySelectorAll('a[href]').forEach(link => {
+    link.addEventListener('click', e => {
+      const href = link.getAttribute('href')
+      if (!href.startsWith('#') && !href.startsWith('http')) {
+        e.preventDefault()
+        const overlay = document.createElement('div')
+        overlay.className =
+          'fixed inset-0 bg-white dark:bg-slate-900 z-[9999] opacity-0 transition-opacity duration-300'
+        document.body.appendChild(overlay)
+        requestAnimationFrame(() => overlay.classList.remove('opacity-0'))
+        setTimeout(() => window.location.href = href, 300)
+      }
+    })
+  })
+</script>
 
 <body class="bg-white dark:bg-slate-900 text-gray-700 dark:text-gray-300 transition-colors">
 
@@ -120,4 +144,8 @@
 </script>
 
 </body>
+<div id="page-transition"
+     class="fixed inset-0 bg-white dark:bg-slate-900 z-[9999] opacity-100 transition-opacity duration-300">
+</div>
+
 </html>

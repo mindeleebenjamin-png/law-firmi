@@ -35,6 +35,30 @@
     }
   </script>
 </head>
+<script>
+  // Fade IN on load
+  window.addEventListener('load', () => {
+    const overlay = document.getElementById('page-transition')
+    overlay.classList.add('opacity-0')
+    setTimeout(() => overlay.remove(), 300)
+  })
+
+  // Fade OUT on navigation
+  document.querySelectorAll('a[href]').forEach(link => {
+    link.addEventListener('click', e => {
+      const href = link.getAttribute('href')
+      if (!href.startsWith('#') && !href.startsWith('http')) {
+        e.preventDefault()
+        const overlay = document.createElement('div')
+        overlay.className =
+          'fixed inset-0 bg-white dark:bg-slate-900 z-[9999] opacity-0 transition-opacity duration-300'
+        document.body.appendChild(overlay)
+        requestAnimationFrame(() => overlay.classList.remove('opacity-0'))
+        setTimeout(() => window.location.href = href, 300)
+      }
+    })
+  })
+</script>
 
 <body class="bg-white dark:bg-slate-900 text-gray-700 dark:text-gray-300 transition-colors">
 
@@ -80,14 +104,31 @@
 
 
 <main class="py-24 max-w-5xl mx-auto px-6 animate-slide">
-  <h2 class="text-4xl font-bold text-primary dark:text-white">
-    About Our Firm
-  </h2>
-  <p class="mt-6">
-    Hamilton & Brooks is a full-service law firm built on integrity,
-    professionalism, and results.
-  </p>
+
+<h2 class="text-4xl font-bold text-primary dark:text-white">
+  About Hamilton & Brooks
+</h2>
+
+<p class="mt-6 text-lg">
+  Founded on principles of integrity, professionalism, and excellence,
+  Hamilton & Brooks has grown into a respected law firm serving individuals,
+  families, and businesses.
+</p>
+
+<p class="mt-6">
+  Our attorneys bring decades of combined experience across multiple
+  practice areas. We believe in honest counsel, strategic planning,
+  and aggressive advocacy when our clients need it most.
+</p>
+
+<p class="mt-6">
+  Every case is approached with precision, discretion, and unwavering
+  dedication to achieving the best possible outcome.
+</p>
+
 </main>
+
+
 
 
 
@@ -119,6 +160,10 @@
 </script>
 
 </body>
+<div id="page-transition"
+     class="fixed inset-0 bg-white dark:bg-slate-900 z-[9999] opacity-100 transition-opacity duration-300">
+</div>
+
 </html>
 
 
